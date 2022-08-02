@@ -6,8 +6,8 @@ require('dotenv').config()
 
 
 let db,
-    dbConnectionStr = process.env.DB_STRING,
-    dbName = 'todo'
+    dbConnectionStr = process.env.DB_STRING, //.env connection string
+    dbName = 'leons-todo' //database
 
 MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     .then(client => {
@@ -22,7 +22,7 @@ app.use(express.json())
 
 
 app.get('/',async (request, response)=>{
-    const todoItems = await db.collection('todos').find().toArray()
+    const todoItems = await db.collection('todos').find().toArray() //collection
     const itemsLeft = await db.collection('todos').countDocuments({completed: false})
     response.render('index.ejs', { items: todoItems, left: itemsLeft })
     // db.collection('todos').find().toArray()
